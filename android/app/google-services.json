@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "438732852041",
+    "project_id": "app-insulina",
+    "storage_bucket": "app-insulina.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:438732852041:android:433169a05c146a29a92898",
+        "android_client_info": {
+          "package_name": "com.example.insulinoterapia"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyAQFQI3etH8zRityN1RQT-Q5aJxt2gsVCg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
