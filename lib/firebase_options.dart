@@ -17,29 +17,17 @@ import 'package:flutter/foundation.dart'
 class DefaultFirebaseOptions {
   static FirebaseOptions get currentPlatform {
     if (kIsWeb) {
-      throw UnsupportedError(
-        'DefaultFirebaseOptions have not been configured for web - '
-        'you can reconfigure this by running the FlutterFire CLI again.',
-      );
+      return web;
     }
     switch (defaultTargetPlatform) {
       case TargetPlatform.android:
         return android;
       case TargetPlatform.iOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for ios - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return ios;
       case TargetPlatform.macOS:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for macos - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return macos;
       case TargetPlatform.windows:
-        throw UnsupportedError(
-          'DefaultFirebaseOptions have not been configured for windows - '
-          'you can reconfigure this by running the FlutterFire CLI again.',
-        );
+        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -57,6 +45,50 @@ class DefaultFirebaseOptions {
     appId: '1:438732852041:android:433169a05c146a29a92898',
     messagingSenderId: '438732852041',
     projectId: 'app-insulina',
+    databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
     storageBucket: 'app-insulina.firebasestorage.app',
   );
+
+  static const FirebaseOptions web = FirebaseOptions(
+    apiKey: 'AIzaSyCTZviZ2ee275UOJfuoisTAfz5jzmUt5Ug',
+    appId: '1:438732852041:web:6c44bf14bb079326a92898',
+    messagingSenderId: '438732852041',
+    projectId: 'app-insulina',
+    authDomain: 'app-insulina.firebaseapp.com',
+    databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
+    storageBucket: 'app-insulina.firebasestorage.app',
+    measurementId: 'G-8FP1ZLH93Q',
+  );
+
+  static const FirebaseOptions macos = FirebaseOptions(
+    apiKey: 'AIzaSyDMJbd6JpHkZDOhjbFZB1LNNgnslmFifa8',
+    appId: '1:438732852041:ios:d2893db8994b57a9a92898',
+    messagingSenderId: '438732852041',
+    projectId: 'app-insulina',
+    databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
+    storageBucket: 'app-insulina.firebasestorage.app',
+    iosBundleId: 'com.example.insulinoterapia',
+  );
+
+  static const FirebaseOptions ios = FirebaseOptions(
+    apiKey: 'AIzaSyDMJbd6JpHkZDOhjbFZB1LNNgnslmFifa8',
+    appId: '1:438732852041:ios:d2893db8994b57a9a92898',
+    messagingSenderId: '438732852041',
+    projectId: 'app-insulina',
+    databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
+    storageBucket: 'app-insulina.firebasestorage.app',
+    iosBundleId: 'com.example.insulinoterapia',
+  );
+
+  static const FirebaseOptions windows = FirebaseOptions(
+    apiKey: 'AIzaSyCTZviZ2ee275UOJfuoisTAfz5jzmUt5Ug',
+    appId: '1:438732852041:web:e0def002a7d8e011a92898',
+    messagingSenderId: '438732852041',
+    projectId: 'app-insulina',
+    authDomain: 'app-insulina.firebaseapp.com',
+    databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
+    storageBucket: 'app-insulina.firebasestorage.app',
+    measurementId: 'G-8SC7SHZMMF',
+  );
+
 }

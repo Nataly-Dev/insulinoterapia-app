@@ -1,6 +1,7 @@
 {
   "project_info": {
     "project_number": "438732852041",
+    "firebase_url": "https://app-insulina-default-rtdb.firebaseio.com",
     "project_id": "app-insulina",
     "storage_bucket": "app-insulina.firebasestorage.app"
   },
