@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:go_router/go_router.dart';
 import '../../providers/insulin_provider.dart';
 import '../../widgets/insulin_result_card.dart';
 
@@ -63,13 +64,21 @@ class _BidNphScreenState extends ConsumerState<BidNphScreen> {
     final result = ref.watch(insulinProvider);
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(
-          'BID NPH',
-          style: TextStyle(fontWeight: FontWeight.bold),
-        ),
-        centerTitle: true,
-      ),
+appBar: AppBar(
+  leading: IconButton(
+    icon: const Icon(Icons.arrow_back),
+    onPressed: () {
+      // Aquí decides a dónde ir
+      context.go('/'); // o context.pop(); si solo querés volver
+    },
+  ),
+  title: const Text(
+    'BID NPH',
+    style: TextStyle(fontWeight: FontWeight.bold),
+  ),
+  centerTitle: true,
+),
+
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Center(

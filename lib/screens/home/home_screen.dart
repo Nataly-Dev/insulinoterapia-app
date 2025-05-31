@@ -1,6 +1,6 @@
-// lib/screens/home/home_screen.dart
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
@@ -10,14 +10,14 @@ class HomeScreen extends StatelessWidget {
     final screenWidth = MediaQuery.of(context).size.width;
 
     return Scaffold(
-appBar: AppBar(
-  title: const Text('Insulinoterapia'),
-
-  centerTitle: true,
-
-  elevation: 0, // opcional: más plano y moderno
-),
-
+      appBar: AppBar(
+        title: Image.asset(
+          'assets/icon/icon.png',
+          height: 200, // o el tamaño que necesites
+        ),
+          centerTitle: true,
+  elevation: 0,
+      ),
 
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(10),
@@ -62,37 +62,38 @@ appBar: AppBar(
       ),
     );
   }
-Widget _buildMenuItem(
-  BuildContext context, {
-  required String label,
-  required IconData icon,
-  required VoidCallback onTap,
-}) {
-  final colorScheme = Theme.of(context).colorScheme;
-  final textStyle = Theme.of(context).textTheme.bodyLarge?.copyWith(
-        fontWeight: FontWeight.w600, // Fuente más negrita
-      );
 
-  return InkWell(
-    onTap: onTap,
-    borderRadius: BorderRadius.circular(12),
-    child: Container(
-      padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
-      decoration: BoxDecoration(
-        color: colorScheme.primary.withAlpha(15), // Reemplazo de withOpacity(0.05)
-        borderRadius: BorderRadius.circular(12),
+  Widget _buildMenuItem(
+    BuildContext context, {
+    required String label,
+    required IconData icon,
+    required VoidCallback onTap,
+  }) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final textStyle = Theme.of(context).textTheme.bodyLarge?.copyWith(
+      fontWeight: FontWeight.w600, // Fuente más negrita
+    );
+
+    return InkWell(
+      onTap: onTap,
+      borderRadius: BorderRadius.circular(12),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 18),
+        decoration: BoxDecoration(
+          color: colorScheme.primary.withAlpha(
+            15,
+          ), // Reemplazo de withOpacity(0.05)
+          borderRadius: BorderRadius.circular(12),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: colorScheme.primary),
+            const SizedBox(width: 16),
+            Expanded(child: Text(label, style: textStyle)),
+            Icon(Icons.chevron_right, color: colorScheme.onSurface),
+          ],
+        ),
       ),
-      child: Row(
-        children: [
-          Icon(icon, color: colorScheme.primary),
-          const SizedBox(width: 16),
-          Expanded(child: Text(label, style: textStyle)),
-          Icon(Icons.chevron_right, color: colorScheme.onSurface),
-        ],
-      ),
-    ),
-  );
-}
-
-
+    );
+  }
 }
