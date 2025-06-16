@@ -29,13 +29,13 @@ class _CombinedTxInsulinScreenState
   }
 
   void _calculate() {
-    final weight = double.tryParse(_weightController.text.trim());
-    final dose = double.tryParse(_doseController.text.trim());
+    final weight = double.tryParse(_weightController.text.trim().replaceAll(',', '.'));
+    final dose = double.tryParse(_doseController.text.trim().replaceAll(',', '.'));
 
     if (weight == null || weight <= 0 || dose == null || dose <= 0) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(const SnackBar(content: Text('Ingrese valores válidos')));
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Ingrese valores válidos')),
+      );
       return;
     }
 
@@ -80,18 +80,18 @@ class _CombinedTxInsulinScreenState
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-
                 const SizedBox(height: 10),
                 _InsulinInputField(
                   controller: _weightController,
                   label: 'Peso del Pte (kg)',
+                  highlight: _isInverse,
                 ),
-            
                 const SizedBox(height: 20),
                 _InsulinInputField(
                   controller: _doseController,
                   label:
                       _isInverse ? 'Dosis total diaria (TDD)' : 'Dosis (U/kg)',
+                  highlight: _isInverse,
                 ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
@@ -107,7 +107,8 @@ class _CombinedTxInsulinScreenState
                   width: double.infinity,
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.calculate),
-                    label: const Text('Calcular',
+                    label: const Text(
+                      'Calcular',
                       style: TextStyle(fontSize: 16),
                     ),
                     onPressed: _calculate,
@@ -130,11 +131,19 @@ class _CombinedTxInsulinScreenState
 class _InsulinInputField extends StatelessWidget {
   final TextEditingController controller;
   final String label;
+  final bool highlight;
 
-  const _InsulinInputField({required this.controller, required this.label});
+  const _InsulinInputField({
+    required this.controller,
+    required this.label,
+    this.highlight = false,
+  });
 
   @override
   Widget build(BuildContext context) {
+    final colorScheme = Theme.of(context).colorScheme;
+    final borderColor = highlight ? colorScheme.primary : Colors.grey;
+
     return TextField(
       controller: controller,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -142,6 +151,14 @@ class _InsulinInputField extends StatelessWidget {
         labelText: label,
         labelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: borderColor),
+          borderRadius: BorderRadius.circular(12),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: borderColor, width: 2),
+          borderRadius: BorderRadius.circular(12),
+        ),
       ),
     );
   }

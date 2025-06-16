@@ -14,8 +14,10 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final List<TextEditingController> _controllers =
-      List.generate(4, (_) => TextEditingController());
+  final List<TextEditingController> _controllers = List.generate(
+    4,
+    (_) => TextEditingController(),
+  );
 
   bool _error = false;
   bool _isLoading = false;
@@ -29,10 +31,11 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     try {
-      final doc = await FirebaseFirestore.instance
-          .collection('login')
-          .doc('CIx3FJ37JB09FB5msBji') // <- usa este ID exacto
-          .get();
+      final doc =
+          await FirebaseFirestore.instance
+              .collection('login')
+              .doc('CIx3FJ37JB09FB5msBji') // <- usa este ID exacto
+              .get();
 
       final correctCode = doc.data()?['code'];
 
@@ -119,9 +122,13 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                   width: double.infinity,
                   child: ElevatedButton(
                     onPressed: _isLoading ? null : _verifyCode,
-                    child: _isLoading
-                        ? const CircularProgressIndicator()
-                        : const Text("Ingresar"),
+                    child: SizedBox(
+                      height: 24,
+                      child:
+                          _isLoading
+                              ? const CircularProgressIndicator(strokeWidth: 2)
+                              : const Text("Ingresar"),
+                    ),
                   ),
                 ),
                 if (_error)

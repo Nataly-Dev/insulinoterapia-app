@@ -30,8 +30,8 @@ class _BidNphScreenState extends ConsumerState<BidNphScreen> {
   }
 
   void _calculate() {
-    final weight = double.tryParse(_weightController.text.trim());
-    final dose = double.tryParse(_doseController.text.trim());
+    final weight = double.tryParse(_weightController.text.trim().replaceAll(',', '.'));
+    final dose = double.tryParse(_doseController.text.trim().replaceAll(',', '.'));
 
     if (weight == null || weight <= 0 || dose == null || dose <= 0) {
       ScaffoldMessenger.of(
@@ -64,21 +64,17 @@ class _BidNphScreenState extends ConsumerState<BidNphScreen> {
     final result = ref.watch(insulinProvider);
 
     return Scaffold(
-appBar: AppBar(
-  leading: IconButton(
-    icon: const Icon(Icons.arrow_back),
-    onPressed: () {
-      // Aquí decides a dónde ir
-      context.go('/'); // o context.pop(); si solo querés volver
-    },
-  ),
-  title: const Text(
-    'BID NPH',
-    style: TextStyle(fontWeight: FontWeight.bold),
-  ),
-  centerTitle: true,
-),
-
+      appBar: AppBar(
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () => context.go('/'),
+        ),
+        title: const Text(
+          'BID NPH',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
+        centerTitle: true,
+      ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
         child: Center(
@@ -91,11 +87,15 @@ appBar: AppBar(
                 _buildInputField(
                   controller: _weightController,
                   label: 'Peso del Pte (kg)',
+                  highlight: _isInverse,
                 ),
                 const SizedBox(height: 20),
                 _buildInputField(
                   controller: _doseController,
-                  label:_isInverse ? 'Dosis total diaria (TDD)' : 'Dosis (U/kg)',
+                  label: _isInverse
+                      ? 'Dosis total diaria (TDD)'
+                      : 'Dosis (U/kg)',
+                  highlight: _isInverse,
                 ),
                 const SizedBox(height: 20),
                 SwitchListTile(
@@ -112,12 +112,14 @@ appBar: AppBar(
                   width: double.infinity,
                   child: ElevatedButton.icon(
                     icon: const Icon(Icons.calculate),
-                    label: const Text('Calcular',
+                    label: const Text(
+                      'Calcular',
                       style: TextStyle(fontSize: 16),
                     ),
                     onPressed: _calculate,
                     style: ElevatedButton.styleFrom(
-                      padding: const EdgeInsets.symmetric(vertical: 14),                    ),
+                      padding: const EdgeInsets.symmetric(vertical: 14),
+                    ),
                   ),
                 ),
                 const SizedBox(height: 20),
@@ -133,8 +135,11 @@ appBar: AppBar(
   Widget _buildInputField({
     required TextEditingController controller,
     required String label,
+    bool highlight = false,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
+    final borderColor = highlight ? colorScheme.primary : Colors.grey;
+
     return TextField(
       controller: controller,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
@@ -142,10 +147,15 @@ appBar: AppBar(
         labelText: label,
         labelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
-        focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: colorScheme.primary, width: 2),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: borderColor),
           borderRadius: BorderRadius.circular(12),
-        ),),
+        ),
+        focusedBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: borderColor, width: 2),
+          borderRadius: BorderRadius.circular(12),
+        ),
+      ),
     );
   }
 }

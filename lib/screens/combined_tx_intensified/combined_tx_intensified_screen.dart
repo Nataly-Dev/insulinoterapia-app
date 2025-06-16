@@ -30,8 +30,8 @@ class _CombinedTxIntensifiesScreenState extends ConsumerState<CombinedTxItensifi
   }
 
   void _onCalculate() {
-    final weight = double.tryParse(_weightController.text.trim());
-    final dose = double.tryParse(_doseController.text.trim());
+    final weight = double.tryParse(_weightController.text.trim().replaceAll(',', '.'));
+    final dose = double.tryParse(_doseController.text.trim().replaceAll(',', '.'));
 
     if (weight == null || weight <= 0 || dose == null || dose <= 0) {
       _showError('Ingrese valores válidos');
