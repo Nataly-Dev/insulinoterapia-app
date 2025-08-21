@@ -15,15 +15,15 @@ class InsulinNotifier extends StateNotifier<InsulinResult?> {
 
   void calculateSingle({required double weight, required double dose}) {
     final tdd = weight * dose;
-    final nightDose = tdd * 0.33;
+    //final nightDose = tdd * 0.33;
 
-    state = InsulinResult(tdd: tdd, nightDose: nightDose);
+    state = InsulinResult(tdd: tdd);
   }
 
   void calculateInverseSingle({required double dose, required double weight}) {
     final factor = double.parse((dose / weight).toStringAsFixed(1));
     
-    state = InsulinResult(tdd: dose, nightDose: dose * 0.33, factor: factor);
+    state = InsulinResult(tdd: dose, factor: factor);
   }
 
   ///////////////////////////////////////////////////////////////////////////////////////
@@ -81,7 +81,7 @@ class InsulinNotifier extends StateNotifier<InsulinResult?> {
     required double weight,
     required double totalDose,
   }) {
-    // Ejemplo modo inverso, ajusta según necesidad
+    // modo inverso
     final dose = (double.parse((totalDose / weight).toStringAsFixed(1)));
     calculateCombinedTx(weight: weight, dose: dose);
   }

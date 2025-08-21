@@ -14,10 +14,11 @@ class LoginScreen extends ConsumerStatefulWidget {
 }
 
 class _LoginScreenState extends ConsumerState<LoginScreen> {
-  final List<TextEditingController> _controllers = List.generate(
-    4,
-    (_) => TextEditingController(),
-  );
+  final List<TextEditingController> _controllers =
+      List.generate(4, (_) => TextEditingController());
+
+  final List<FocusNode> _focusNodes =
+      List.generate(4, (_) => FocusNode()); // 1focus por campo
 
   bool _error = false;
   bool _isLoading = false;
@@ -31,31 +32,49 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     });
 
     try {
-      final doc =
-          await FirebaseFirestore.instance
-              .collection('login')
-              .doc('CIx3FJ37JB09FB5msBji') // <- usa este ID exacto
-              .get();
+      final doc = await FirebaseFirestore.instance
+          .collection('login')
+          .doc('CIx3FJ37JB09FB5msBji') // ID exacto de firebase
+          .get();
 
       final correctCode = doc.data()?['code'];
 
       if (code.trim() == correctCode.trim()) {
         final prefs = await SharedPreferences.getInstance();
-        final expiry = DateTime.now().add(const Duration(minutes: 30));
+        final expiry = DateTime.now().add(const Duration(minutes: 60));//minutos de duracion de la sesion
         await prefs.setString("session_expiry", expiry.toIso8601String());
 
-        ref.read(authProvider.notifier).login(); // <- ¡Aquí es donde logueamos!
+        ref.read(authProvider.notifier).login(); // aqui es donde logueamosss
 
         if (!mounted) return;
         context.go('/home');
       } else {
-        setState(() => _error = true);
+        // limpiar inputs y devolver focus al primero
+        setState(() {
+          _error = true;
+          for (var controller in _controllers) {
+            controller.clear();
+          }
+        });
+        _focusNodes.first.requestFocus();
       }
     } catch (e) {
       setState(() => _error = true);
     } finally {
       setState(() => _isLoading = false);
     }
+  }
+
+  @override
+  void dispose() {
+    // liberar focusnodes y controllers para el arbol de widgets
+    for (var controller in _controllers) {
+      controller.dispose();
+    }
+    for (var node in _focusNodes) {
+      node.dispose();
+    }
+    super.dispose();
   }
 
   @override
@@ -88,6 +107,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                       width: 50,
                       child: TextField(
                         controller: _controllers[index],
+                        focusNode: _focusNodes[index], // 🔹 focus propio
                         autofocus: index == 0,
                         obscureText: true,
                         textAlign: TextAlign.center,
@@ -110,7 +130,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                         onChanged: (value) {
                           setState(() => _error = false);
                           if (value.isNotEmpty && index < 3) {
-                            FocusScope.of(context).nextFocus();
+                            _focusNodes[index + 1].requestFocus(); // 🔹 mover al siguiente
                           }
                         },
                       ),
@@ -124,10 +144,9 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
                     onPressed: _isLoading ? null : _verifyCode,
                     child: SizedBox(
                       height: 24,
-                      child:
-                          _isLoading
-                              ? const CircularProgressIndicator(strokeWidth: 2)
-                              : const Text("Ingresar"),
+                      child: _isLoading
+                          ? const CircularProgressIndicator(strokeWidth: 2)
+                          : const Text("Ingresar"),
                     ),
                   ),
                 ),

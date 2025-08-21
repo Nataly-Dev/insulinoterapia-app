@@ -28,8 +28,8 @@ class CombinedTxInsulinCard extends StatelessWidget {
                   Text(
                     dose['label']!,
                     style: TextStyle(
-                      fontWeight: dose['label']!.trim().startsWith('TDD') ? FontWeight.bold : FontWeight.normal,
-                      fontSize: dose['label']!.trim().startsWith('TDD') ? 20 : 16,
+                      fontWeight: dose['label']!.trim().startsWith('U Total') ? FontWeight.bold : FontWeight.normal,
+                      fontSize: dose['label']!.trim().startsWith('U Total') ? 20 : 16,
                       color: Theme.of(context).colorScheme.primary,
                     ),
                   ),

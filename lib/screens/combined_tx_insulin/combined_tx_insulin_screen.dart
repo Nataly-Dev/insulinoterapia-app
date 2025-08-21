@@ -90,13 +90,13 @@ class _CombinedTxInsulinScreenState
                 _InsulinInputField(
                   controller: _doseController,
                   label:
-                      _isInverse ? 'Dosis total diaria (TDD)' : 'Dosis (U/kg)',
+                      _isInverse ? 'U Total diaria' : 'Dosis (U/kg)',
                   highlight: _isInverse,
                 ),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   title: const Text(
-                    'Modo inverso (TDD conocida)',
+                    'Modo inverso (U Total conocida)',
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                   ),
                   value: _isInverse,

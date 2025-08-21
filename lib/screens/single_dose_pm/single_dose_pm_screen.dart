@@ -46,9 +46,12 @@ class _SingleDosePmScreenState extends ConsumerState<SingleDosePmScreen> {
   }
 
   void _onCalculate() async {
-
-    final weight =  double.tryParse(_weightController.text.trim().replaceAll(',', '.'));
-    final dose = double.tryParse(_doseController.text.trim().replaceAll(',', '.'));
+    final weight = double.tryParse(
+      _weightController.text.trim().replaceAll(',', '.'),
+    );
+    final dose = double.tryParse(
+      _doseController.text.trim().replaceAll(',', '.'),
+    );
 
     if (weight == null || weight <= 0) {
       _showError('Por favor ingrese un peso válido y positivo.');
@@ -65,9 +68,10 @@ class _SingleDosePmScreenState extends ConsumerState<SingleDosePmScreen> {
     if (shouldShowWarning) {
       final continuar = await showConfirmationDialog(
         context: context,
-        message: _inverseMode
-            ? 'La dosis no puede sobrepasar 40 U en total.\n\n¿Desea continuar al esquema BID NPH?'
-            : 'La dosis no puede sobrepasar 0.6 U/kg.\n\n¿Desea continuar al esquema BID NPH?',
+        message:
+            _inverseMode
+                ? 'La dosis No puede sobrepasar 40 U en total.\n\n¿Desea continuar al esquema BID NPH?'
+                : 'La dosis No puede sobrepasar 0.6 U/kg.\n\n¿Desea continuar al esquema BID NPH?',
       );
 
       if (continuar) {
@@ -87,7 +91,9 @@ class _SingleDosePmScreenState extends ConsumerState<SingleDosePmScreen> {
   }
 
   void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(SnackBar(content: Text(message)));
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
   }
 
   @override
@@ -97,7 +103,10 @@ class _SingleDosePmScreenState extends ConsumerState<SingleDosePmScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Dosis única PM', style: TextStyle(fontWeight: FontWeight.bold)),
+        title: const Text(
+          'Dosis única PM',
+          style: TextStyle(fontWeight: FontWeight.bold),
+        ),
         centerTitle: true,
       ),
       body: SingleChildScrollView(
@@ -118,15 +127,17 @@ class _SingleDosePmScreenState extends ConsumerState<SingleDosePmScreen> {
                 _buildInputField(
                   context,
                   controller: _doseController,
-                  label: _inverseMode ? 'Dosis TDD' : 'Dosis (U/kg)',
+                  label: _inverseMode ? 'U Total' : 'Dosis (U/kg)',
                   highlight: _inverseMode,
                 ),
                 const SizedBox(height: 12),
                 SwitchListTile(
                   contentPadding: EdgeInsets.zero,
                   title: Text(
-                    'Modo inverso (TDD conocida)',
-                    style: textTheme.bodyLarge?.copyWith(fontWeight: FontWeight.w600),
+                    'Modo inverso (U Total conocida)',
+                    style: textTheme.bodyLarge?.copyWith(
+                      fontWeight: FontWeight.w600,
+                    ),
                   ),
                   value: _inverseMode,
                   onChanged: _toggleInverseMode,
@@ -142,6 +153,15 @@ class _SingleDosePmScreenState extends ConsumerState<SingleDosePmScreen> {
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
                   ),
+                ),
+                const SizedBox(height: 8,), 
+                Text(
+                  "NOTA: Aplicar idealmente 9 - 10 pm para evitar hipoglucemias",
+                  style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                    color: Colors.grey[700],
+                    fontStyle: FontStyle.italic,
+                  ),
+                  textAlign: TextAlign.center,
                 ),
                 const SizedBox(height: 20),
                 if (result != null) InsulinResultCard(result: result),

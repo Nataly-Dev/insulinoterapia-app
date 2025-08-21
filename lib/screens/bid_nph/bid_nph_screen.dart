@@ -93,14 +93,14 @@ class _BidNphScreenState extends ConsumerState<BidNphScreen> {
                 _buildInputField(
                   controller: _doseController,
                   label: _isInverse
-                      ? 'Dosis total diaria (TDD)'
+                      ? 'U total diaria '
                       : 'Dosis (U/kg)',
                   highlight: _isInverse,
                 ),
                 const SizedBox(height: 20),
                 SwitchListTile(
                   title: const Text(
-                    'Modo inverso (TDD conocida)',
+                    'Modo inverso (U Total conocida)',
                     style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
                   ),
                   value: _isInverse,

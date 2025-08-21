@@ -27,7 +27,7 @@ class InsulinResultCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: result.doses.map((dose) {
-            if (dose['label'] == 'TDD') {
+            if (dose['label'] == 'U Total') {
               // Centrar solo la fila de TDD
               return Padding(
                 padding: const EdgeInsets.symmetric(vertical: 12),

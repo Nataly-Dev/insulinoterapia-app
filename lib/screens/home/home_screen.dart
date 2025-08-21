@@ -13,7 +13,7 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: Image.asset(
           'assets/icon/icon.png',
-          height: isTablet ? 150 : 120,
+          height: isTablet ? 115 : 100,
           fit: BoxFit.contain,
         ),
         elevation: 0,
