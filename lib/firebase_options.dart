@@ -24,10 +24,6 @@ class DefaultFirebaseOptions {
         return android;
       case TargetPlatform.iOS:
         return ios;
-      case TargetPlatform.macOS:
-        return macos;
-      case TargetPlatform.windows:
-        return windows;
       case TargetPlatform.linux:
         throw UnsupportedError(
           'DefaultFirebaseOptions have not been configured for linux - '
@@ -60,19 +56,11 @@ class DefaultFirebaseOptions {
     measurementId: 'G-8FP1ZLH93Q',
   );
 
-  static const FirebaseOptions macos = FirebaseOptions(
-    apiKey: 'AIzaSyDMJbd6JpHkZDOhjbFZB1LNNgnslmFifa8',
-    appId: '1:438732852041:ios:d2893db8994b57a9a92898',
-    messagingSenderId: '438732852041',
-    projectId: 'app-insulina',
-    databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
-    storageBucket: 'app-insulina.firebasestorage.app',
-    iosBundleId: 'com.healium.insulinoterapia',
-  );
+
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyDMJbd6JpHkZDOhjbFZB1LNNgnslmFifa8',
-    appId: '1:438732852041:ios:d2893db8994b57a9a92898',
+    appId: '1:438732852041:ios:081f22114d9f0289a92898',
     messagingSenderId: '438732852041',
     projectId: 'app-insulina',
     databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
@@ -80,15 +68,6 @@ class DefaultFirebaseOptions {
     iosBundleId: 'com.healium.insulinoterapia',
   );
 
-  static const FirebaseOptions windows = FirebaseOptions(
-    apiKey: 'AIzaSyCTZviZ2ee275UOJfuoisTAfz5jzmUt5Ug',
-    appId: '1:438732852041:web:e0def002a7d8e011a92898',
-    messagingSenderId: '438732852041',
-    projectId: 'app-insulina',
-    authDomain: 'app-insulina.firebaseapp.com',
-    databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
-    storageBucket: 'app-insulina.firebasestorage.app',
-    measurementId: 'G-8SC7SHZMMF',
-  );
+
 
 }
