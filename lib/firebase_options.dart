@@ -67,7 +67,7 @@ class DefaultFirebaseOptions {
     projectId: 'app-insulina',
     databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
     storageBucket: 'app-insulina.firebasestorage.app',
-    iosBundleId: 'com.example.insulinoterapia',
+    iosBundleId: 'com.healium.insulinoterapia',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
@@ -77,7 +77,7 @@ class DefaultFirebaseOptions {
     projectId: 'app-insulina',
     databaseURL: 'https://app-insulina-default-rtdb.firebaseio.com',
     storageBucket: 'app-insulina.firebasestorage.app',
-    iosBundleId: 'com.example.insulinoterapia',
+    iosBundleId: 'com.healium.insulinoterapia',
   );
 
   static const FirebaseOptions windows = FirebaseOptions(
