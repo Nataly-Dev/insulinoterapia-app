@@ -7,14 +7,32 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart'; 
 
 
-void main() async {
+/*void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(const ProviderScope(child: MyApp()));
+}*/
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  try {
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print("✅ Firebase initialized successfully");
+  } catch (e, s) {
+    // En release se puede usar FlutterError.onError para que no se quede en negro
+    FlutterError.onError = (details) {
+      print('❌ Firebase init error: $details');
+    };
+    print("❌ Firebase initialization failed: $e\n$s");
+  }
+
+  runApp(const ProviderScope(child: MyApp()));
 }
+
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
