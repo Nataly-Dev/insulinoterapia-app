@@ -2,7 +2,7 @@ name: insulinoterapia
 description: "A new Flutter project."
 publish_to: 'none'
 
-version: 1.0.0+6
+version: 1.0.0+7
 
 environment:
   sdk: ">=3.7.2 <4.0.0"
@@ -31,6 +31,7 @@ flutter:
   assets:
     - assets/icon/icon_insulin.svg
     - assets/icon/icon.png
+    - assets/icon/iconp.png
 
 # Configuración de flutter_launcher_icons
 flutter_icons:

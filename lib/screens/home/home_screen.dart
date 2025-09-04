@@ -11,8 +11,7 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Image.asset(
-          'assets/icon/icon.png',
+        title: Image.asset('assets/icon/iconp.png',
           height: isTablet ? 115 : 100,
           fit: BoxFit.contain,
         ),

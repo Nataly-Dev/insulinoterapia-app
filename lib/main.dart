@@ -7,15 +7,15 @@ import 'package:firebase_core/firebase_core.dart';
 import 'firebase_options.dart'; 
 
 
-/*void main() async {
+void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
 
   runApp(const ProviderScope(child: MyApp()));
-}*/
-void main() async {
+}
+/*void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   try {
     await Firebase.initializeApp(
@@ -31,7 +31,7 @@ void main() async {
   }
 
   runApp(const ProviderScope(child: MyApp()));
-}
+}*/
 
 
 class MyApp extends ConsumerWidget {
