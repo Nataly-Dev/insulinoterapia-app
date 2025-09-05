@@ -4,19 +4,23 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'router/app_router.dart';
 import 'theme/app_theme.dart';
 import 'package:firebase_core/firebase_core.dart';
-import 'firebase_options.dart'; 
-
+import 'firebase_options.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp(
-    options: DefaultFirebaseOptions.currentPlatform,
-  );
+  print("Inicio main.dart");
+  try {
+    WidgetsFlutterBinding.ensureInitialized();
+    await Firebase.initializeApp(
+      options: DefaultFirebaseOptions.currentPlatform,
+    );
+    print("Firebase inicializado");
+  } catch (e) {
+    print("Error inicializando Firebase: $e");
+  }
 
   runApp(const ProviderScope(child: MyApp()));
+  print("runApp ejecutado");
 }
-
-
 
 class MyApp extends ConsumerWidget {
   const MyApp({super.key});
