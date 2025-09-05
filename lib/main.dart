@@ -15,23 +15,7 @@ void main() async {
 
   runApp(const ProviderScope(child: MyApp()));
 }
-/*void main() async {
-  WidgetsFlutterBinding.ensureInitialized();
-  try {
-    await Firebase.initializeApp(
-      options: DefaultFirebaseOptions.currentPlatform,
-    );
-    print("✅ Firebase initialized successfully");
-  } catch (e, s) {
-    // En release se puede usar FlutterError.onError para que no se quede en negro
-    FlutterError.onError = (details) {
-      print('❌ Firebase init error: $details');
-    };
-    print("❌ Firebase initialization failed: $e\n$s");
-  }
 
-  runApp(const ProviderScope(child: MyApp()));
-}*/
 
 
 class MyApp extends ConsumerWidget {
