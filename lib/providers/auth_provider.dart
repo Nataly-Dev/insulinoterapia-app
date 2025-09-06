@@ -12,7 +12,7 @@ class AuthNotifier extends StateNotifier<bool> {
   void login() {
     state = true;
     _logoutTimer?.cancel(); // cancelamos si ya había uno
-    _logoutTimer = Timer(const Duration(minutes: 30), () {
+    _logoutTimer = Timer(const Duration(minutes: 60), () {
       state = false; // cerrar sesión después de 30 min
     });
   }
