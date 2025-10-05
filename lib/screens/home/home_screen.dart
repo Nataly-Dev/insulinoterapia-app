@@ -16,7 +16,7 @@ class HomeScreen extends StatelessWidget {
         title: Row(
           children: [
             Padding(padding: const EdgeInsets.only(left: 16.0),
-              child: Image.asset('assets/icon/iconp.png',height: isTablet ? 115 : 100,fit: BoxFit.contain,),
+              child: Image.asset('assets/icon/iconp.png',height: isTablet ? 115 : 120,fit: BoxFit.contain,),
             ),
           ],
         ),
