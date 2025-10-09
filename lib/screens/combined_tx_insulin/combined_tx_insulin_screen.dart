@@ -117,6 +117,19 @@ class _CombinedTxInsulinScreenState
                     ),
                   ),
                 ),
+                 const SizedBox(height: 8,), 
+                Center(
+                  
+                  child: Text(
+                    "DOSIS: 0,6-1,2 U/Kg.",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey[700],
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+                  
                 const SizedBox(height: 20),
                 if (result != null) InsulinResultCard(result: result),
               ],

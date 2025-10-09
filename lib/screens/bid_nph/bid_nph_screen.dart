@@ -30,8 +30,12 @@ class _BidNphScreenState extends ConsumerState<BidNphScreen> {
   }
 
   void _calculate() {
-    final weight = double.tryParse(_weightController.text.trim().replaceAll(',', '.'));
-    final dose = double.tryParse(_doseController.text.trim().replaceAll(',', '.'));
+    final weight = double.tryParse(
+      _weightController.text.trim().replaceAll(',', '.'),
+    );
+    final dose = double.tryParse(
+      _doseController.text.trim().replaceAll(',', '.'),
+    );
 
     if (weight == null || weight <= 0 || dose == null || dose <= 0) {
       ScaffoldMessenger.of(
@@ -92,9 +96,7 @@ class _BidNphScreenState extends ConsumerState<BidNphScreen> {
                 const SizedBox(height: 20),
                 _buildInputField(
                   controller: _doseController,
-                  label: _isInverse
-                      ? 'U total diaria '
-                      : 'Dosis (U/kg)',
+                  label: _isInverse ? 'U total diaria ' : 'Dosis (U/kg)',
                   highlight: _isInverse,
                 ),
                 const SizedBox(height: 20),
@@ -120,6 +122,17 @@ class _BidNphScreenState extends ConsumerState<BidNphScreen> {
                     style: ElevatedButton.styleFrom(
                       padding: const EdgeInsets.symmetric(vertical: 14),
                     ),
+                  ),
+                ),
+                const SizedBox(height: 8),
+                Center(
+                  child: Text(
+                    "DOSIS: 0,6-1,2 U/Kg.",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey[700],
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.center,
                   ),
                 ),
                 const SizedBox(height: 20),

@@ -1,18 +1,72 @@
-import 'package:insulinoterapia/widgets/insulin_result_card.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../providers/insulin_provider.dart';
+import '../../widgets/insulin_result_card.dart';
 
 class CombinedTxItensifiedScreen extends ConsumerStatefulWidget {
   const CombinedTxItensifiedScreen({super.key});
 
   @override
-  ConsumerState<CombinedTxItensifiedScreen> createState() => _CombinedTxIntensifiesScreenState();
+  ConsumerState<CombinedTxItensifiedScreen> createState() =>
+      _CombinedTxItensifiedScreenState();
 }
 
-class _CombinedTxIntensifiesScreenState extends ConsumerState<CombinedTxItensifiedScreen> {
+class _CombinedTxItensifiedScreenState
+    extends ConsumerState<CombinedTxItensifiedScreen> {
   final TextEditingController _weightController = TextEditingController();
   final TextEditingController _doseController = TextEditingController();
+
+  bool _isInverse = false;
+
+  void _toggleInverseMode(bool value) {
+    setState(() => _isInverse = value);
+    _clearInputsAndResult();
+  }
+
+  void _clearInputsAndResult() {
+    _weightController.clear();
+    _doseController.clear();
+    ref.read(insulinProvider.notifier).clear();
+  }
+
+  void _onCalculate() {
+    final weight = double.tryParse(
+      _weightController.text.trim().replaceAll(',', '.'),
+    );
+    final dose = double.tryParse(
+      _doseController.text.trim().replaceAll(',', '.'),
+    );
+
+    if (weight == null || weight <= 0 || dose == null || dose <= 0) {
+      _showError('Ingrese valores válidos');
+      return;
+    }
+
+    final provider = ref.read(insulinProvider.notifier);
+
+    if (_isInverse) {
+      provider.calcularTxCombinadaIntensificadaInverse(
+        peso: weight,
+        dosisTotal: dose,
+      );
+    } else {
+      provider.calcularTxCombinadaIntensificada(peso: weight, dosis: dose);
+    }
+  }
+
+  void _showError(String message) {
+    ScaffoldMessenger.of(
+      context,
+    ).showSnackBar(SnackBar(content: Text(message)));
+  }
+
+  @override
+  void initState() {
+    super.initState();
+    Future.microtask(() {
+      _clearInputsAndResult();
+    });
+  }
 
   @override
   void dispose() {
@@ -22,42 +76,16 @@ class _CombinedTxIntensifiesScreenState extends ConsumerState<CombinedTxItensifi
   }
 
   @override
-  void initState() {
-    super.initState();
-    Future.microtask(() {
-      ref.read(insulinProvider.notifier).clear();
-    });
-  }
-
-  void _onCalculate() {
-    final weight = double.tryParse(_weightController.text.trim().replaceAll(',', '.'));
-    final dose = double.tryParse(_doseController.text.trim().replaceAll(',', '.'));
-
-    if (weight == null || weight <= 0 || dose == null || dose <= 0) {
-      _showError('Ingrese valores válidos');
-      return;
-    }
-
-    ref.read(insulinProvider.notifier).calcularTxCombinadaIntensificada(peso: weight, dosis: dose);
-  }
-
-  void _showError(String message) {
-    ScaffoldMessenger.of(context).showSnackBar(
-      SnackBar(content: Text(message)),
-    );
-  }
-
-  @override
   Widget build(BuildContext context) {
     final combinedTx = ref.watch(insulinProvider);
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Tx Intensificada',
+        title: const Text(
+          'Tx Intensificada',
           style: TextStyle(fontWeight: FontWeight.bold),
         ),
-                centerTitle: true,
-
+        centerTitle: true,
       ),
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(20),
@@ -67,10 +95,28 @@ class _CombinedTxIntensifiesScreenState extends ConsumerState<CombinedTxItensifi
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                _buildInputField(controller: _weightController, label: 'Peso del Pte (kg)'),
-                const SizedBox(height: 16),
-                _buildInputField(controller: _doseController, label: 'Dosis (U/kg)'),
-                const SizedBox(height: 24),
+                const SizedBox(height: 10),
+                _buildInputField(
+                  controller: _weightController,
+                  label: 'Peso del Pte (kg)',
+                  highlight: _isInverse,
+                ),
+                const SizedBox(height: 20),
+                _buildInputField(
+                  controller: _doseController,
+                  label: _isInverse ? 'U Total diaria' : 'Dosis (U/kg)',
+                  highlight: _isInverse,
+                ),
+                SwitchListTile(
+                  contentPadding: EdgeInsets.zero,
+                  title: const Text(
+                    'Modo inverso (U Total conocida)',
+                    style: TextStyle(fontWeight: FontWeight.w600, fontSize: 16),
+                  ),
+                  value: _isInverse,
+                  onChanged: _toggleInverseMode,
+                ),
+                const SizedBox(height: 20),
                 SizedBox(
                   width: double.infinity,
                   child: ElevatedButton.icon(
@@ -85,6 +131,18 @@ class _CombinedTxIntensifiesScreenState extends ConsumerState<CombinedTxItensifi
                     ),
                   ),
                 ),
+                const SizedBox(height: 8),
+                Center(
+                  child: Text(
+                    "DOSIS: 0,6-1,2 U/Kg.",
+                    style: Theme.of(context).textTheme.bodySmall?.copyWith(
+                      color: Colors.grey[700],
+                      fontStyle: FontStyle.italic,
+                    ),
+                    textAlign: TextAlign.center,
+                  ),
+                ),
+
                 const SizedBox(height: 20),
                 if (combinedTx != null) InsulinResultCard(result: combinedTx),
               ],
@@ -98,17 +156,24 @@ class _CombinedTxIntensifiesScreenState extends ConsumerState<CombinedTxItensifi
   Widget _buildInputField({
     required TextEditingController controller,
     required String label,
+    bool highlight = false,
   }) {
     final colorScheme = Theme.of(context).colorScheme;
+    final borderColor = highlight ? colorScheme.primary : Colors.grey;
+
     return TextField(
       controller: controller,
       keyboardType: const TextInputType.numberWithOptions(decimal: true),
       decoration: InputDecoration(
         labelText: label,
-         labelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),      
+        labelStyle: const TextStyle(fontWeight: FontWeight.w500, fontSize: 16),
         border: OutlineInputBorder(borderRadius: BorderRadius.circular(12)),
+        enabledBorder: OutlineInputBorder(
+          borderSide: BorderSide(color: borderColor),
+          borderRadius: BorderRadius.circular(12),
+        ),
         focusedBorder: OutlineInputBorder(
-          borderSide: BorderSide(color: colorScheme.primary, width: 2),
+          borderSide: BorderSide(color: borderColor, width: 2),
           borderRadius: BorderRadius.circular(12),
         ),
       ),

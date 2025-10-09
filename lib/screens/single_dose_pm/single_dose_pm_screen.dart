@@ -156,7 +156,7 @@ class _SingleDosePmScreenState extends ConsumerState<SingleDosePmScreen> {
                 ),
                 const SizedBox(height: 8,), 
                 Text(
-                  "NOTA: Aplicar idealmente 9 - 10 pm para evitar hipoglucemias",
+                  "NOTA: Si la dosis sobrepasa 0,6 ó 40U en Total pasar a BID NPH (Ifluye peso del pte).\\Aplicar idealmente 9 - 10 pm para evitar hipoglucemias.",
                   style: Theme.of(context).textTheme.bodySmall?.copyWith(
                     color: Colors.grey[700],
                     fontStyle: FontStyle.italic,

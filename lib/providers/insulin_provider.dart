@@ -118,4 +118,11 @@ class InsulinNotifier extends StateNotifier<InsulinResult?> {
       factor: dosis,
     );
   }
+    void calcularTxCombinadaIntensificadaInverse({required double peso,required double dosisTotal,}) {
+
+    final dosis = (dosisTotal / peso);
+    final dosisRe = dosis;
+
+    calcularTxCombinadaIntensificada(peso: peso, dosis: dosisRe);
+  }
 }
