@@ -104,7 +104,7 @@ class InsulinNotifier extends StateNotifier<InsulinResult?> {
     final lunchSimple = morningDose * ((1 / 3) / 2); // almuerzo simple
 
     final nightNph = nightDose * 0.5;
-    final nightSimple = nightDose * 0.5;
+    final nightSimple = nightDose * (1 / 3);
 
     state = CombinedTxInsulin(
       tdd: tdd,

@@ -11,8 +11,8 @@ class HomeScreen extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        automaticallyImplyLeading:false, // evita el botón "back" si no se necesita
-        titleSpacing: 0, // elimina el espacio extra del AppBar
+        automaticallyImplyLeading:false, 
+        titleSpacing: 0, 
         title: Row(
           children: [
             Padding(padding: const EdgeInsets.only(left: 16.0),
